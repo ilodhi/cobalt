@@ -12,6 +12,13 @@ import { getBrowserLanguage } from "$lib/settings/audio-sub-language";
 
 type Migrator = (s: AllPartialSettingsWithSchema) => AllPartialSettingsWithSchema;
 
+type LegacyPrivacySettings = AllPartialSettingsWithSchema & {
+    privacy?: {
+        alwaysProxy?: boolean;
+        disableAnalytics?: boolean;
+    };
+};
+
 const migrations: Record<number, Migrator> = {
     [3]: (settings: AllPartialSettingsWithSchema) => {
         const out = settings as RecursivePartial<CobaltSettingsV3>;
@@ -59,11 +66,13 @@ const migrations: Record<number, Migrator> = {
             }
         }
 
-        if (settings?.privacy) {
-            if ("alwaysProxy" in settings.privacy) {
+        const legacy = settings as LegacyPrivacySettings;
+
+        if (legacy.privacy) {
+            if ("alwaysProxy" in legacy.privacy) {
                 out.save ??= {};
-                out.save.alwaysProxy = settings.privacy.alwaysProxy;
-                delete settings.privacy.alwaysProxy;
+                out.save.alwaysProxy = legacy.privacy.alwaysProxy;
+                delete legacy.privacy.alwaysProxy;
             }
         }
 
@@ -101,8 +110,10 @@ const migrations: Record<number, Migrator> = {
         const out = settings as RecursivePartial<CobaltSettingsV7>;
         out.schemaVersion = 7;
 
-        if (settings?.privacy) {
-            delete settings.privacy;
+        const legacy = settings as LegacyPrivacySettings;
+
+        if (legacy.privacy) {
+            delete legacy.privacy;
         }
 
         return out as AllPartialSettingsWithSchema;
