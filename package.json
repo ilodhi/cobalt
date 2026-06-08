@@ -9,6 +9,7 @@
         "dev:web": "pnpm --filter @imput/cobalt-web dev",
         "start:local": "powershell -ExecutionPolicy Bypass -File scripts/start-local.ps1",
         "expose:api": "powershell -ExecutionPolicy Bypass -File scripts/expose-api.ps1",
-        "setup:background": "powershell -ExecutionPolicy Bypass -File scripts/setup-background.ps1"
+        "setup:background": "powershell -ExecutionPolicy Bypass -File scripts/setup-background.ps1",
+        "setup:quick-tunnel": "powershell -ExecutionPolicy Bypass -File scripts/setup-quick-tunnel.ps1"
     }
 }
