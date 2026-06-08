@@ -24,3 +24,12 @@ export const load: PageLoad = async ({ params }) => {
 };
 
 export const prerender = true;
+
+export function entries() {
+    return [
+        { page: "general" },
+        { page: "privacy" },
+        { page: "terms" },
+        { page: "credits" },
+    ];
+}

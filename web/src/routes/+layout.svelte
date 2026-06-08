@@ -7,6 +7,7 @@
     import "@fontsource/ibm-plex-mono/500.css";
 
     import { onMount } from "svelte";
+    import { base } from "$app/paths";
     import { page } from "$app/stores";
     import { updated } from "$app/stores";
     import { browser } from "$app/environment";
@@ -205,8 +206,8 @@
         height: 0;
         position: absolute;
         z-index: -10;
-        content: url(/meowbalt/smile.png) url(/meowbalt/error.png)
-            url(/meowbalt/question.png) url(/meowbalt/think.png);
+        content: url("{base}/meowbalt/smile.png") url("{base}/meowbalt/error.png")
+            url("{base}/meowbalt/question.png") url("{base}/meowbalt/think.png");
 
         font-family: "Noto Sans Mono";
         font-size: 0;

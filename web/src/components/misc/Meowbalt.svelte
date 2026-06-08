@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { base } from "$app/paths";
     import { t } from "$lib/i18n/translations";
     import type { MeowbaltEmotions } from "$lib/types/meowbalt";
 
@@ -16,7 +17,7 @@
     class="meowbalt {emotion}"
     class:loaded={loaded || forceLoaded}
     onload={() => (loaded = true)}
-    src="/meowbalt/{emotion}.png"
+    src="{base}/meowbalt/{emotion}.png"
     height="152"
     alt={$t("general.meowbalt")}
     aria-hidden="true"

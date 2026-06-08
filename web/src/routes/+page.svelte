@@ -1,4 +1,5 @@
 <script>
+    import { appPath } from "$lib/app-path";
     import { t } from "$lib/i18n/translations";
 
     import Omnibox from "$components/save/Omnibox.svelte";
@@ -23,7 +24,7 @@
     </main>
     <div id="terms-note">
         {$t("save.terms.note.agreement")}
-        <a href="/about/terms">{$t("save.terms.note.link")}</a>
+        <a href={appPath("/about/terms")}>{$t("save.terms.note.link")}</a>
     </div>
 </div>
 

@@ -97,6 +97,10 @@ const config = {
             base,
             relative: !!base,
         },
+        prerender: {
+            handleHttpError: "warn",
+            handleUnseenRoutes: "warn",
+        },
         alias: {
             $components: 'src/components',
             $i18n: 'i18n',
