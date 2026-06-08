@@ -20,8 +20,11 @@ if (-not (Test-Path (Join-Path $Root "node_modules"))) {
     pnpm install
 }
 
-if (-not (Test-Path (Join-Path $Root "api\.env"))) {
-    Copy-Item (Join-Path $Root "api\.env.example") (Join-Path $Root "api\.env")
+$ApiEnv = Join-Path $Root "api" | Join-Path -ChildPath ".env"
+$ApiEnvExample = Join-Path $Root "api" | Join-Path -ChildPath ".env.example"
+
+if (-not (Test-Path $ApiEnv)) {
+    Copy-Item $ApiEnvExample $ApiEnv
 }
 
 function Install-StartupShortcut($Name, $ScriptPath) {
@@ -105,15 +108,11 @@ ingress:
 
         $publicUrl | Set-Content -Path (Join-Path $ConfigDir "tunnel-url.txt") -Encoding utf8
 
-        $apiEnv = Join-Path $Root "api\.env"
-        "API_URL=$publicUrl" | Set-Content -Path $apiEnv -Encoding utf8
+        Set-Content -Path $ApiEnv -Value "API_URL=$publicUrl" -Encoding utf8
 
-        $apiConfig = Join-Path $Root "web\static\api-config.json"
-        @"
-{
-    "defaultApi": "$publicUrl"
-}
-"@ | Set-Content -Path $apiConfig -Encoding utf8
+        $apiConfig = Join-Path $Root "web" | Join-Path -ChildPath "static" | Join-Path -ChildPath "api-config.json"
+        $configJson = @{ defaultApi = $publicUrl } | ConvertTo-Json -Compress
+        Set-Content -Path $apiConfig -Value $configJson -Encoding utf8
 
         Write-Host ""
         Write-Host "Saved API URL: $publicUrl" -ForegroundColor Green

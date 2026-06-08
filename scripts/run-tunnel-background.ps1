@@ -4,21 +4,21 @@ $ConfigDir = Join-Path $env:LOCALAPPDATA "cobalt"
 $ConfigFile = Join-Path $ConfigDir "cloudflared.yml"
 $LogFile = Join-Path $ConfigDir "tunnel.log"
 $UrlFile = Join-Path $ConfigDir "tunnel-url.txt"
+$QuickFlag = Join-Path $ConfigDir "quick-tunnel.flag"
 
 New-Item -ItemType Directory -Force -Path $ConfigDir | Out-Null
 
 if (-not (Get-Command cloudflared -ErrorAction SilentlyContinue)) {
     Add-Content -Path $LogFile -Value "$(Get-Date -Format o) cloudflared not installed"
-    exit 1
+    exit 0
 }
 
-if (-not (Test-Path $ConfigFile)) {
-    Add-Content -Path $LogFile -Value "$(Get-Date -Format o) missing $ConfigFile — run pnpm setup:background first"
-    exit 1
-}
+$quickMode = Test-Path $QuickFlag
+$namedMode = Test-Path $ConfigFile
 
-# quick tunnel mode (no cloudflare account): stable for this windows session only
-$quickMode = Test-Path (Join-Path $ConfigDir "quick-tunnel.flag")
+if (-not $quickMode -and -not $namedMode) {
+    exit 0
+}
 
 if ($quickMode) {
     $existing = Get-Process cloudflared -ErrorAction SilentlyContinue
@@ -53,16 +53,11 @@ Start-Process `
 if (Test-Path $UrlFile) {
     $tunnelUrl = (Get-Content $UrlFile -Raw).Trim()
     if ($tunnelUrl) {
-        $apiEnv = Join-Path $Root "api\.env"
-        @"
-API_URL=$tunnelUrl
-"@ | Set-Content -Path $apiEnv -Encoding utf8
+        $apiEnv = Join-Path $Root "api" | Join-Path -ChildPath ".env"
+        Set-Content -Path $apiEnv -Value "API_URL=$tunnelUrl" -Encoding utf8
 
-        $apiConfig = Join-Path $Root "web\static\api-config.json"
-        @"
-{
-    "defaultApi": "$tunnelUrl"
-}
-"@ | Set-Content -Path $apiConfig -Encoding utf8
+        $apiConfig = Join-Path $Root "web" | Join-Path -ChildPath "static" | Join-Path -ChildPath "api-config.json"
+        $configJson = @{ defaultApi = $tunnelUrl } | ConvertTo-Json -Compress
+        Set-Content -Path $apiConfig -Value $configJson -Encoding utf8
     }
 }
