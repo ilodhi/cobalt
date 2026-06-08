@@ -23,15 +23,16 @@ if (-not $node) {
     exit 1
 }
 
-Set-Location $ApiDir
+$wrapper = Join-Path $LogDir "start-api.cmd"
+@"
+@echo off
+cd /d "$ApiDir"
+"$($node.Source)" src\cobalt >> "$LogFile" 2>&1
+"@ | Set-Content -Path $wrapper -Encoding ASCII
 
 $process = Start-Process `
-    -FilePath $node.Source `
-    -ArgumentList "src/cobalt" `
-    -WorkingDirectory $ApiDir `
+    -FilePath $wrapper `
     -WindowStyle Hidden `
-    -RedirectStandardOutput $LogFile `
-    -RedirectStandardError $LogFile `
     -PassThru
 
 Add-Content -Path $LogFile -Value "$(Get-Date -Format o) started cobalt api (pid $($process.Id))"
