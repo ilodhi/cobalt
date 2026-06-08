@@ -1,5 +1,4 @@
 <script lang="ts">
-    import env from "$lib/env";
     import { t } from "$lib/i18n/translations";
 
     import SectionHeading from "$components/misc/SectionHeading.svelte";
@@ -82,30 +81,6 @@ github](https://github.com/imputnet/cobalt/tree/main/api/src/stream), чтобы
 доступ к ссылке и ключам шифрования. ключи генерируются уникально для каждого
 запрошенного туннеля.
 </section>
-
-{#if env.PLAUSIBLE_ENABLED}
-<section id="plausible">
-<SectionHeading
-    title={$t("about.heading.plausible")}
-    sectionId="plausible"
-/>
-
-мы используем [plausible](https://plausible.io/), чтобы знать приблизительное
-число активных пользователей кобальта, полностью анонимно. никакая
-идентифицирующая информация о тебе или твоих запросах никогда не хранится. все
-данные анонимизированы и агрегированы. мы сами хостим и управляем [инстансом
-plausible](https://{env.PLAUSIBLE_HOST}/), который использует кобальт.
-
-plausible не использует куки и полностью соответствует GDPR, CCPA и PECR.
-
-если ты хочешь отказаться от анонимной аналитики, то это можно сделать в
-[настройках приватности](/settings/privacy#analytics). после отказа скрипт
-plausible не будет загружаться.
-
-[узнай больше о преданности plausible к
-приватности](https://plausible.io/privacy-focused-web-analytics).
-</section>
-{/if}
 
 <section id="cloudflare">
 <SectionHeading

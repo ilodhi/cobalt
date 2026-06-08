@@ -3,5 +3,12 @@
     "packageManager": "pnpm@9.6.0",
     "engines": {
         "pnpm": ">=9"
+    },
+    "scripts": {
+        "dev:api": "pnpm --filter @imput/cobalt-api start",
+        "dev:web": "pnpm --filter @imput/cobalt-web dev",
+        "start:local": "powershell -ExecutionPolicy Bypass -File scripts/start-local.ps1",
+        "expose:api": "powershell -ExecutionPolicy Bypass -File scripts/expose-api.ps1",
+        "setup:background": "powershell -ExecutionPolicy Bypass -File scripts/setup-background.ps1"
     }
 }

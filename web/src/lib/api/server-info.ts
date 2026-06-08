@@ -1,6 +1,7 @@
 import { browser } from "$app/environment";
 
 import { get } from "svelte/store";
+import { loadApiConfig } from "$lib/api/api-config";
 import { currentApiURL } from "$lib/api/api-url";
 import { turnstileCreated, turnstileEnabled, turnstileSolved } from "$lib/state/turnstile";
 import cachedInfo from "$lib/state/server-info";
@@ -41,6 +42,8 @@ const reloadIfTurnstileDisabled = () => {
 }
 
 export const getServerInfo = async () => {
+    await loadApiConfig();
+
     const cache = get(cachedInfo);
 
     if (cache && cache.origin === currentApiURL()) {

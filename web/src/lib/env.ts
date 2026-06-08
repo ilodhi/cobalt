@@ -16,8 +16,6 @@ const getEnvBool = (key: string) => {
 
 const variables = {
     HOST: getEnv('HOST'),
-    PLAUSIBLE_HOST: getEnv('PLAUSIBLE_HOST'),
-    PLAUSIBLE_ENABLED: getEnv('HOST') && getEnv('PLAUSIBLE_HOST'),
     DEFAULT_API: getEnv('DEFAULT_API'),
     ENABLE_WEBCODECS: getEnvBool('ENABLE_WEBCODECS'),
     ENABLE_DEPRECATED_YOUTUBE_HLS: getEnvBool('ENABLE_DEPRECATED_YOUTUBE_HLS'),

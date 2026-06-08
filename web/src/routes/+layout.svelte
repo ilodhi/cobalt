@@ -39,7 +39,6 @@
         device.prefers.reducedTransparency;
 
     $: preloadAssets = false;
-    $: plausibleLoaded = false;
 
     afterNavigate(async () => {
         const to_focus: HTMLElement | null =
@@ -77,17 +76,6 @@
             name="theme-color"
             content={statusBarColors.desktop[$currentTheme]}
         />
-    {/if}
-
-    {#if plausibleLoaded || (browser && env.PLAUSIBLE_ENABLED && !$settings.privacy.disableAnalytics)}
-        <script
-            defer
-            data-domain={env.HOST}
-            on:load={() => {
-                plausibleLoaded = true;
-            }}
-            src="https://{env.PLAUSIBLE_HOST}/js/script.js"
-        ></script>
     {/if}
 </svelte:head>
 

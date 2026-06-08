@@ -1,5 +1,4 @@
 <script lang="ts">
-    import env from "$lib/env";
     import { t } from "$lib/i18n/translations";
 
     import SectionHeading from "$components/misc/SectionHeading.svelte";
@@ -75,27 +74,6 @@ decryption keys are only included in the access link and never logged/cached/sto
 only the end user has access to the link & encryption keys.
 keys are generated uniquely for each requested tunnel.
 </section>
-
-{#if env.PLAUSIBLE_ENABLED}
-<section id="plausible">
-<SectionHeading
-    title={$t("about.heading.plausible")}
-    sectionId="plausible"
-/>
-
-we use [plausible](https://plausible.io/) to get an approximate number
-of active cobalt users, fully anonymously. no identifiable information about
-you or your requests is ever stored. all data is anonymized and aggregated.
-we self-host and manage the [plausible instance](https://{env.PLAUSIBLE_HOST}/) that cobalt uses.
-
-plausible doesn't use cookies and is fully compliant with GDPR, CCPA, and PECR.
-
-if you wish to opt out of anonymous analytics, you can do it in [privacy settings](/settings/privacy#analytics).
-if you opt out, the plausible script will not be loaded at all.
-
-[learn more about plausible's dedication to privacy](https://plausible.io/privacy-focused-web-analytics).
-</section>
-{/if}
 
 <section id="cloudflare">
 <SectionHeading

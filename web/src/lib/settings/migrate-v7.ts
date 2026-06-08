@@ -15,7 +15,6 @@ const oldCheckboxes = [
     'reduceTransparency',
     'disableAnimations',
     'disableMetadata',
-    'plausible_ignore',
     'ytDub',
     'tiktokH265'
 ] as const;
@@ -65,10 +64,7 @@ const getDownloadMode = () => {
 
 const cleanup = () => {
     for (const key of Object.keys(localStorage)) {
-        // plausible script needs this value, so we keep it if migrating
-        if (key !== 'plausible_ignore') {
-            localStorage.removeItem(key);
-        }
+        localStorage.removeItem(key);
     }
 }
 
@@ -87,9 +83,6 @@ export const migrateOldSettings = () => {
             theme: getLiteral('theme'),
             reduceTransparency: getBool('reduceTransparency'),
             reduceMotion: getBool('disableAnimations'),
-        },
-        privacy: {
-            disableAnalytics: getBool('plausible_ignore')
         },
         save: {
             youtubeVideoCodec: getLiteral('vCodec'),

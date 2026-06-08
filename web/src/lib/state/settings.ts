@@ -10,14 +10,6 @@ import { migrateOldSettings } from '../settings/migrate-v7';
 import defaultSettings from '../settings/defaults';
 import { migrate } from '$lib/settings/migrate';
 
-const updatePlausiblePreference = (settings: PartialSettings) => {
-    if (settings.privacy?.disableAnalytics) {
-        localStorage.setItem('plausible_ignore', 'true');
-    } else if (localStorage.getItem('plausible_ignore') !== null) {
-        localStorage.removeItem('plausible_ignore');
-    }
-}
-
 const writeToStorage = (settings: PartialSettings) => {
     localStorage.setItem(
         "settings",
@@ -30,6 +22,8 @@ const writeToStorage = (settings: PartialSettings) => {
 const loadFromStorage = () => {
     if (!browser)
         return {};
+
+    localStorage.removeItem('plausible_ignore');
 
     const settings = localStorage.getItem('settings');
     if (!settings) {
@@ -76,7 +70,6 @@ export function updateSetting(partial: PartialSettings) {
             )
         );
 
-        updatePlausiblePreference(partial);
         return updated;
     });
 }

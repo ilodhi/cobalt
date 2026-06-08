@@ -6,6 +6,7 @@ import type {
     CobaltSettingsV4,
     CobaltSettingsV5,
     CobaltSettingsV6,
+    CobaltSettingsV7,
 } from "$lib/types/settings";
 import { getBrowserLanguage } from "$lib/settings/audio-sub-language";
 
@@ -91,6 +92,17 @@ const migrations: Record<number, Migrator> = {
                 out.save!.localProcessing =
                     settings.save.localProcessing ? "preferred" : "disabled";
             }
+        }
+
+        return out as AllPartialSettingsWithSchema;
+    },
+
+    [7]: (settings: AllPartialSettingsWithSchema) => {
+        const out = settings as RecursivePartial<CobaltSettingsV7>;
+        out.schemaVersion = 7;
+
+        if (settings?.privacy) {
+            delete settings.privacy;
         }
 
         return out as AllPartialSettingsWithSchema;

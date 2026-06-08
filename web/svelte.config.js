@@ -6,6 +6,8 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { sveltePreprocess } from "svelte-preprocess";
 
+const base = process.env.WEB_BASE_PATH || "";
+
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
     // Consult https://kit.svelte.dev/docs/integrations#preprocessors
@@ -71,9 +73,6 @@ const config = {
                     "wasm-unsafe-eval",
                     "challenges.cloudflare.com",
 
-                    // eslint-disable-next-line no-undef
-                    process.env.WEB_PLAUSIBLE_HOST ? process.env.WEB_PLAUSIBLE_HOST : "",
-
                     // hash of the theme preloader in app.html
                     "sha256-g67gIjM3G8yMbjbxyc3QUoVsKhdxgcQzCmSKXiZZo6s=",
                 ],
@@ -95,7 +94,8 @@ const config = {
             pollInterval: 60000
         },
         paths: {
-            relative: false
+            base,
+            relative: !!base,
         },
         alias: {
             $components: 'src/components',

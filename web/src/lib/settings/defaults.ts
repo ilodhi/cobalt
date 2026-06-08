@@ -3,7 +3,7 @@ import { defaultLocale } from "$lib/i18n/translations";
 import type { CobaltSettings } from "$lib/types/settings";
 
 const defaultSettings: CobaltSettings = {
-    schemaVersion: 6,
+    schemaVersion: 7,
     advanced: {
         debug: false,
         useWebCodecs: false,
@@ -40,9 +40,6 @@ const defaultSettings: CobaltSettings = {
         youtubeDubLang: "original",
         youtubeHLS: false,
         youtubeBetterAudio: false,
-    },
-    privacy: {
-        disableAnalytics: false,
     },
     processing: {
         customInstanceURL: "",
