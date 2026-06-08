@@ -1,0 +1,12 @@
+# Optional helpers for a local cobalt API (run from repo root):
+#   docker compose -f docker-compose.local.yml up -d
+#
+# Then add to api/.env:
+#   YOUTUBE_SESSION_SERVER=http://localhost:8080/
+
+services:
+    yt-session-generator:
+        image: ghcr.io/imputnet/yt-session-generator:webserver
+        restart: unless-stopped
+        ports:
+            - "8080:8080"

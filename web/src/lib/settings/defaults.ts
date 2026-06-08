@@ -22,8 +22,9 @@ const defaultSettings: CobaltSettings = {
     },
     save: {
         alwaysProxy: false,
-        localProcessing:
-            device.supports.defaultLocalProcessing ? "preferred" : "disabled",
+        // disabled by default for self-hosted setups — server tunnel is more reliable
+        // than browser-side fetch + ffmpeg over a cloudflare quick tunnel
+        localProcessing: "disabled",
         audioBitrate: "128",
         audioFormat: "mp3",
         disableMetadata: false,
